@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const { productModel } = require("../models/product.model");
 
+
 const router = Router();
 
 router.get("/", async (req, res) => {
@@ -11,17 +12,18 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  let { nombre, apellido, categoria, precio, stock, imagen } = req.body;
-  if (!nombre || !apellido || !categoria || !precio || !stock || !imagen) {
+  let { title, description, code, price, stock, category } = req.body;
+  if (!title || !description || !code || !price || !stock || !category) {
     res.send({ status: "error", error: "Faltan parámetros" });
   }
+  
   let result = await productModel.create({
-    nombre,
-    apellido,
-    categoria,
-    precio,
+    title,
+    description,
+    code,
+    price,
     stock,
-    imagen,
+    category,
   });
   res.send({ result: "success", payload: result });
 });
@@ -30,12 +32,12 @@ router.put("/:pid", async (req, res) => {
   let { pid } = req.params;
   let productToReplace = req.body;
   if (
-    !productToReplace.nombre ||
-    !productToReplace.apellido ||
-    !productToReplace.categoria ||
-    !productToReplace.precio ||
+    !productToReplace.title ||
+    !productToReplace.description ||
+    !productToReplace.code ||
+    !productToReplace.price ||
     !productToReplace.stock ||
-    !productToReplace.imagen
+    !productToReplace.category
   ) {
     res.send({ status: "error", error: "Faltan parámetros" });
   }
