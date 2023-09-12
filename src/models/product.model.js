@@ -9,7 +9,7 @@ const productsSchema = new mongoose.Schema({
     code:{type: Number, required: true},
     price:{type: Number, required: true},
     stock:{type: Number, required: true},
-    category:{type: String, required: true, max: 100}
+    category:{type: String, required: true, max: 100, index: true }
 })
 
 productsSchema.plugin(mongoosePaginate)
