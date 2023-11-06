@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const { productModel } = require("../models/product.model");
+const { generateProduct }  = require("../utils/faker.js")
 
 const router = Router();
 
@@ -8,13 +9,18 @@ router.get("/", async (req, res) => {
     const limit = parseInt(req.query.limit) || 10;
     const page = parseInt(req.query.page) || 1;
     const sort = parseInt(req.query.sort) || "asc";
-    const filter = req.query.category === 'all' ? {} : req.query.category ? { category: req.query.category } : {}
+    const filter =
+      req.query.category === "all"
+        ? {}
+        : req.query.category
+        ? { category: req.query.category }
+        : {};
 
     const options = {
       limit: limit,
       page: page,
-      sort: {price: sort}
-    }
+      sort: { price: sort },
+    };
 
     let products = await productModel.paginate(filter, options);
 
@@ -22,20 +28,21 @@ router.get("/", async (req, res) => {
   } catch (error) {
     console.log(error);
   }
+
 });
 
-router.get('/:pid', async (req, res) => {
-  const { pid } = req.params
-  const result = await productModel.find({ _id: pid })
-  res.send({ status: 'success', payload: result })
-})
+router.get("/:pid", async (req, res) => {
+  const { pid } = req.params;
+  const result = await productModel.find({ _id: pid });
+  res.send({ status: "success", payload: result });
+});
+
 
 router.post("/", async (req, res) => {
   let { title, description, code, price, stock, category } = req.body;
 
   if (!title || !description || !code || !price || !stock || !category) {
-    if(code )
-    res.send({ status: "error", error: "Faltan parámetros" });
+    if (code) res.send({ status: "error", error: "Faltan parámetros" });
   }
 
   let result = await productModel.create({

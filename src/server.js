@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 //routes
 const productsRouter = require("./routes/product.router");
 const cartRouter = require("./routes/cart.router");
-const { cartModel } = require("./models/cart.model");
+const mockRouter = require("./routes/mock.router")
 
 const app = express();
 const port = 8080;
@@ -26,14 +26,7 @@ mongoose
     console.error("Error en la conexión", error);
   });
 
-// const enviroment = async () => {
-//   await mongoose.connect("mongodb+srv://almazanbelen:belsds22@cluster0.dfo2ui5.mongodb.net/?retryWrites=true&w=majority")
-//   // let cart = await cartModel.findById({_id: "64fb398d12a8525d06bd64f4"})
-//   // cart.products.push({ product: "64fa49bbfe40bdbf56426db6"})
-//   // let result = await cartModel.updateOne({_id: "64fb398d12a8525d06bd64f4"}, cart)
-// }
-
-// enviroment()
 
 app.use("/api/products", productsRouter);
 app.use("/api/carts", cartRouter);
+app.use("/api/mockingproducts", mockRouter)
