@@ -8,7 +8,7 @@ router.get("/", async (req, res) => {
     for(let i = 0; i< 100;i++){ 
       products.push(generateProduct())
     }
-    res.send({status: "succes", payload: products})
+    res.send({status: "success", payload: products})
   });
 
   module.exports = router

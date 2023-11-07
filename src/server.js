@@ -4,7 +4,8 @@ const mongoose = require("mongoose");
 //routes
 const productsRouter = require("./routes/product.router");
 const cartRouter = require("./routes/cart.router");
-const mockRouter = require("./routes/mock.router")
+const mockRouter = require("./routes/mock.router");
+
 
 const app = express();
 const port = 8080;
@@ -26,7 +27,8 @@ mongoose
     console.error("Error en la conexión", error);
   });
 
-
 app.use("/api/products", productsRouter);
 app.use("/api/carts", cartRouter);
-app.use("/api/mockingproducts", mockRouter)
+app.use("/api/mockingproducts", mockRouter);
+
+
