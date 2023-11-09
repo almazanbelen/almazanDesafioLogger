@@ -1,9 +1,11 @@
+//imports
 const { Router } = require("express");
 const { cartModel } = require("../models/cart.model");
 
-
+//instancia del router
 const router = Router();
 
+//obtener carritos
 router.get("/", async (req, res) => {
   try {
     let cart = await cartModel.find();
@@ -11,16 +13,18 @@ router.get("/", async (req, res) => {
   } catch (error) {}
 });
 
+//crear carrito
+//-------uso de logger winston
 router.post("/", async (req, res) => {
   let { first_name, last_name, email } = req.body;
   if (!first_name || !last_name || !email) {
-    res.send({ status: "error", error: "Faltan parámetros" });
+    req.logger.error("Faltan parámetros");
   }
-  let result = await cartModel.create({ 
+  let result = await cartModel.create({
     first_name,
     last_name,
-    email
-   });
+    email,
+  });
   res.send({ result: "success", payload: result });
 });
 
@@ -34,11 +38,11 @@ router.put("/:cid", async (req, res) => {
 
 // agregar un producto
 router.put("/:cid/products/:pid", async (req, res) => {
-  let { cid , pid } = req.params;
-  let cart = await cartModel.findById(cid)
-  cart.products.push({product: pid})
+  let { cid, pid } = req.params;
+  let cart = await cartModel.findById(cid);
+  cart.products.push({ product: pid });
   let result = await cartModel.updateOne({ _id: cid }, cart);
-  res.send({ result: "success", payload: result, cart: cart});
+  res.send({ result: "success", payload: result, cart: cart });
 });
 
 //eliminar un carrito
@@ -51,10 +55,11 @@ router.delete("/:cid", async (req, res) => {
 //eliminar un producto
 router.delete("/:cid/products/:pid", async (req, res) => {
   let { cid, pid } = req.params;
-  let cart = await cartModel.findById(cid)
-  cart.products.splice({_id: pid})
+  let cart = await cartModel.findById(cid);
+  cart.products.splice({ _id: pid });
   let result = await cartModel.updateOne({ _id: cid }, cart);
-  res.send({ result: "success", payload: result});
+  res.send({ result: "success", payload: result });
 });
 
+//exports
 module.exports = router;

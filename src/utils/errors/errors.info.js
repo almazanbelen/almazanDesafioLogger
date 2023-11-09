@@ -1,3 +1,4 @@
+//funcion para utilizar error personalizado en products
 generateProductErrorInfo = (product) => {
   return `Algun propiedad está incompleta o no es válida:
     *title : Se necesita un String y se recibio ${product.title}
@@ -7,4 +8,6 @@ generateProductErrorInfo = (product) => {
     *stock : Se necesita un Number y se recibio ${product.stock}
     *category : Se necesita un String y se recibio ${product.category}`;
 };
+
+//exports
 module.exports = generateProductErrorInfo;

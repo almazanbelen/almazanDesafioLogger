@@ -1,5 +1,7 @@
+//imports
 let { fakerES } = require("@faker-js/faker");
 
+//funcion para generar productos
 generateProduct = () => {
   return {
     title: fakerES.commerce.product(),
@@ -11,6 +13,18 @@ generateProduct = () => {
   };
 };
 
+//funcion para generar usuarios y luego testearlos con artillery
+generateUser = () => {
+  return {
+    first_name: fakerES.person.firstName(),
+    last_name: fakerES.person.lastName(),
+    email: fakerES.internet.email(),
+    password: fakerES.number.int(100),
+  };
+};
+
+//exports
 module.exports = {
   generateProduct,
+  generateUser,
 };

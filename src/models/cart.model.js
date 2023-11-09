@@ -1,7 +1,10 @@
+//imports
 const mongoose = require("mongoose");
 
+//coleccion
 const cartCollection = "cart";
 
+//schema
 const cartSchema = new mongoose.Schema({
   first_name: { type: String, required: true, max: 100 },
   last_name: { type: String, required: true, max: 100 },
@@ -24,4 +27,5 @@ cartSchema.pre("find", function () {
 
 const cartModel = mongoose.model(cartCollection, cartSchema);
 
+//exports
 module.exports = { cartModel };

@@ -1,11 +1,14 @@
+//imports
 const { Router } = require("express");
 const { productModel } = require("../models/product.model");
 const CustomError = require("../utils/errors/customErrors");
 const EErrors = require("../utils/errors/enums");
 const generateProductErrorInfo = require("../utils/errors/errors.info");
 
+//instanca del router
 const router = Router();
 
+//obtener un producto
 router.get("/", async (req, res) => {
   try {
     const limit = parseInt(req.query.limit) || 10;
@@ -32,6 +35,7 @@ router.get("/", async (req, res) => {
   }
 });
 
+//obtener producto by ID
 router.get("/:pid", async (req, res) => {
   const { pid } = req.params;
   if (!pid) {
@@ -41,6 +45,8 @@ router.get("/:pid", async (req, res) => {
   res.send({ status: "success", payload: result });
 });
 
+//crear producto
+//------- manejo de errores personalizados
 router.post("/", async (req, res) => {
   let { title, description, code, price, stock, category } = req.body;
 
@@ -71,6 +77,7 @@ router.post("/", async (req, res) => {
   res.send({ result: "success", payload: result });
 });
 
+//modificar un produto
 router.put("/:pid", async (req, res) => {
   let { pid } = req.params;
   let productToReplace = req.body;
@@ -88,10 +95,12 @@ router.put("/:pid", async (req, res) => {
   res.send({ result: "success", payload: result });
 });
 
+//eliminar producto
 router.delete("/:pid", async (req, res) => {
   let { pid } = req.params;
   let result = await productModel.deleteOne({ _id: pid });
   res.send({ result: "success", payload: result });
 });
 
+//exports
 module.exports = router;

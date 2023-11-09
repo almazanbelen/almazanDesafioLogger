@@ -1,0 +1,21 @@
+config:
+  target: "http://localhost:8080"
+  phases:
+    - duration: 20
+      arrivalRate: 10
+      metrics:
+        - plugin: "metrics-by-endpoints" 
+scenarios:
+  - flow:
+    - post:
+        url: "/test/user"
+        json:
+          title:
+          description:
+          code:
+          price:
+          stock:
+          category:
+        capture:
+          - json: "$.message"
+            as: "responseMessage"

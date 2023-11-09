@@ -1,3 +1,4 @@
+//customizando el error
 module.exports = class CustomError {
   static createError({ name = "error", cause, message, code = 1 }) {
     const error = new Error(message, { cause });
